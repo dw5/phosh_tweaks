@@ -1,0 +1,9 @@
+#Not used yet
+#name    :css name       :arguments
+top panel:phosh-top-panel:background,color
+home panel:phosh-home:background,color
+running apps:phosh-overview:background-image
+app grid:phosh-app-grid:background-image
+lock screen:phosh-lockscreen:background-image
+keyboard buttons:sq_view sq_button:background,color
+keyboard bg:sq_view:background-color
