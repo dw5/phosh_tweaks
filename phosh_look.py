@@ -45,7 +45,7 @@ def load_ui_parts(dropdown):
 def load_preset_themes(dropdown):
     global themes
     global theme_order
-    css_path = "/home/purism/.config/gtk-3.0/"
+    css_path = "/home/purism/.config/gtk-3.0"
 
     path = script_path + "/themes"
     themes = {}
@@ -59,7 +59,7 @@ def load_preset_themes(dropdown):
     theme_order = list(themes.keys())
     #set active
     if os.path.islink(css_path):
-        link_path = os.path.readlink(css_path)
+        link_path = os.readlink(css_path)
         print(link_path)
         name = link_path.split("/")[-1]
         index = theme_order.index(name)
@@ -70,66 +70,6 @@ def load_preset_themes(dropdown):
     
     #dropdown.append_text("custom")
 #########################DEFINE Handlers#########################
-def on_selected_files(files_treeselection):
-    global selected_file
-    
-    (model, pathlist) = files_treeselection.get_selected_rows()
-    for path in pathlist:
-        tree_iter = model.get_iter(path)
-        target = model.get_value(tree_iter, 0)
-        
-        selected_file = os.path.join(os.getcwd(), target)
-
-def on_cover_draw(cover_area, cairo):
-    global open_audiobook
-    
-    cover = None
-    
-    if open_audiobook != None:
-        cover = open_audiobook["cover"]
-    
-    rect = cover_area.get_allocation()
-    context = cover_area.get_style_context()
-    
-    Gtk.render_background(context, cairo, rect.x, rect.y, rect.width, rect.height)
-    
-    if cover != None:
-        pixbuf = Pixbuf.new_from_file(cover)
-        
-        p_width = pixbuf.get_width()
-        p_height = pixbuf.get_height()
-        
-        r_width = 1.0 * rect.width / p_width
-        r_height = 1.0 * rect.height / p_height
-        
-        ratio = min(r_width, r_height)
-        
-        p_width = int(p_width * ratio)
-        p_height = int(p_height * ratio)
-        
-        offset_x = (rect.width - p_width) * 0.5
-        offset_y = (rect.height - p_height) * 0.5
-        
-        if ratio >= 1.0:
-            pixbuf = pixbuf.scale_simple(p_width, p_height, InterpType.NEAREST)
-        else:
-            pixbuf = pixbuf.scale_simple(p_width, p_height, InterpType.BILINEAR)
-        
-        Gtk.render_icon(context, cairo, pixbuf, offset_x, offset_y)
-    else:
-        theme = Gtk.IconTheme.get_default()
-        pixbuf = theme.load_icon("image-missing", 32, 0)
-
-        p_width = pixbuf.get_width()
-        p_height = pixbuf.get_height()
-
-        offset_x = (rect.width - p_width) * 0.5
-        offset_y = (rect.height - p_height) * 0.5
-
-        Gtk.render_icon(context, cairo, pixbuf, offset_x, offset_y)
-    
-    cairo.fill()
-    return False
 
 def on_destroy(phosh_look_window):
     
