@@ -20,6 +20,9 @@ import os
 script_path = os.path.dirname(os.path.realpath(__file__))
 path = f"{script_path}/phosh_look.py"
 install_path = f"/home/purism/.local/share/applications/phosh_look.desktop"
+install_dir = "/home/purism/.local/share/applications/"
+
+os.makedirs(install_dir, exist_ok=True )
 
 icon_file = f"""[Desktop Entry]
 Name=Phosh Look
