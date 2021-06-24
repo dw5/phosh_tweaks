@@ -154,6 +154,8 @@ def apply_and_restart(apply_button):
     if os.path.islink(link_target):
         os.remove(link_target)
     elif os.path.isdir(link_target):
+        if os.path.isdir(backup_dir):
+            shutil.rmtree(backup_dir)
         shutil.move(link_target, backup_dir)
         print(f"Moved GTK folder to {backup_dir}")
 
